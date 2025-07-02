@@ -20,13 +20,21 @@ class DemoSeeder extends Seeder
             'password' => bcrypt('password'),
         ]);
 
-        Property::create([
-            'title' => 'Maison de démonstration',
-            'description' => 'Belle maison située dans le centre-ville.',
-            'location' => 'Paris',
-            'starting_price' => 100000,
-            'min_increment' => 1000,
-            'end_at' => now()->addDays(7),
+        Property::update([
+            'title' => 'Apartement de démonstration',
+            'description' => 'Belle Apartement située dans le centre-ville.',
+            'location' => 'Valbonne',
+            'starting_price' => 280000,
+            'min_increment' => 2500,
+            'end_at' => now()->addDays(7), //Edit this later for when release to prod
         ]);
+
+        User::create([
+            'name' => 'Admin',
+            'email' => 'admin@example.com',
+            'password' => bcrypt('supersecret'),
+            'is_admin' => true,
+        ]);
+
     }
 }
