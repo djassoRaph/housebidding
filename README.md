@@ -1,6 +1,7 @@
 # Housebidding
 
 Projet Laravel 11 minimaliste de vente aux enchères d'une maison.
+L'interface utilise Bootstrap 5 via CDN (aucune compilation n'est nécessaire).
 
 ## Installation
 
@@ -9,7 +10,6 @@ composer install
 cp .env.example .env
 php artisan key:generate
 php artisan migrate --seed
-npm install && npm run build # compilation locale de Tailwind
 ```
 
 ## Déploiement sur o2switch

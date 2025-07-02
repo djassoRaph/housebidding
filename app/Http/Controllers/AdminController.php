@@ -31,6 +31,13 @@ class AdminController extends Controller
         return back();
     }
 
+    public function validateDocument(User $user)
+    {
+        $this->authorizeAdmin();
+        $user->update(['document_valide' => true]);
+        return back();
+    }
+
     private function authorizeAdmin(): void
     {
         if (Auth::guest() || Auth::user()->email !== config('mail.admin_address')) {

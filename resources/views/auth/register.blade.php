@@ -1,52 +1,28 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
+@extends('layouts.guest')
 
-        <!-- Nom -->
-        <div>
-            <x-input-label for="name" value="Nom" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-        </div>
-
-        <!-- Adresse email -->
-        <div class="mt-4">
-            <x-input-label for="email" value="Email" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Mot de passe -->
-        <div class="mt-4">
-            <x-input-label for="password" value="Mot de passe" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirmation du mot de passe -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" value="Confirmez le mot de passe" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                Déjà inscrit ?
-            </a>
-
-            <x-primary-button class="ms-4">
-                S'inscrire
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+@section('content')
+<form method="POST" action="{{ route('register') }}">
+    @csrf
+    <div class="mb-3">
+        <label for="name" class="form-label">Nom</label>
+        <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
+        @error('name')<div class="text-danger">{{ $message }}</div>@enderror
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input id="email" type="email" class="form-control" name="email" value="{{ old('email') }}" required>
+        @error('email')<div class="text-danger">{{ $message }}</div>@enderror
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Mot de passe</label>
+        <input id="password" type="password" class="form-control" name="password" required>
+        @error('password')<div class="text-danger">{{ $message }}</div>@enderror
+    </div>
+    <div class="mb-3">
+        <label for="password_confirmation" class="form-label">Confirmez le mot de passe</label>
+        <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" required>
+    </div>
+    <button type="submit" class="btn btn-primary w-100">S'inscrire</button>
+    <p class="mt-3 text-center"><a href="{{ route('login') }}">Déjà inscrit ?</a></p>
+</form>
+@endsection

@@ -18,6 +18,7 @@ class DemoSeeder extends Seeder
             'name' => 'Utilisateur Démo',
             'email' => 'demo@example.com',
             'password' => bcrypt('password'),
+            'document_valide' => true,
         ]);
 
         Property::create([

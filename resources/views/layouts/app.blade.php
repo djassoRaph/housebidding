@@ -7,15 +7,11 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+    <body>
+        <div class="min-vh-100 bg-light">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
@@ -32,7 +28,7 @@
                 @yield('content')
                 {{ $slot ?? '' }}
             </main>
-            <footer class="text-center py-4 text-sm text-gray-600">
+            <footer class="text-center py-4 small text-muted">
                 <a href="{{ url('/mentions-legales') }}" class="underline">Mentions légales</a> |
                 <a href="{{ url('/conditions') }}" class="underline">Conditions d'utilisation</a>
                 <div>Contact : {{ config('mail.owner_address') }}</div>

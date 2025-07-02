@@ -16,6 +16,10 @@ class BidController extends Controller
     {
         $property = Property::first();
 
+        if (!Auth::user()->document_valide) {
+            return back()->withErrors(['document' => "Vous devez fournir un justificatif de solvabilité pour participer à l'enchère."]);
+        }
+
         if ($property->closed || $property->end_at->isPast()) {
             return back()->withErrors(['auction' => 'La vente est terminée.']);
         }
