@@ -20,14 +20,16 @@ class DemoSeeder extends Seeder
             'password' => bcrypt('password'),
         ]);
 
-        Property::update([
-            'title' => 'Apartement de démonstration',
-            'description' => 'Belle Apartement située dans le centre-ville.',
-            'location' => 'Valbonne',
-            'starting_price' => 280000,
-            'min_increment' => 2500,
-            'end_at' => now()->addDays(7), //Edit this later for when release to prod
-        ]);
+        Property::updateOrCreate(
+            ['title' => 'Appartement de Julien GOETZ'], // Unique identifying field
+            [
+                'description' => 'Belle appartement située dans le centre-ville.',
+                'location' => 'Valbonne',
+                'starting_price' => 280000,
+                'min_increment' => 2500,
+                'end_at' => now()->addDays(7),
+            ]
+        );
 
         User::create([
             'name' => 'Admin',

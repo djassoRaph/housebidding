@@ -8,6 +8,50 @@
     <p class="mb-2"><strong>Fin des enchères :</strong> {{ $property->end_at->format('d/m/Y H:i') }}</p>
     <p class="mb-4"><strong>Enchère actuelle :</strong> {{ $highestBid ? number_format($highestBid->amount,0,',',' ') . ' €' : 'Aucune' }}</p>
 
+    @php
+        use Illuminate\Support\Facades\File;
+        $galleryImages = File::exists(public_path('photos'))
+            ? collect(File::files(public_path('photos')))
+                ->filter(fn($f) => in_array(strtolower($f->getExtension()), ['jpg', 'jpeg', 'png']))
+            : collect();
+    @endphp
+    @if ($galleryImages->isNotEmpty())
+        <div class="container my-4">
+            <div class="row row-cols-2 row-cols-md-3 row-cols-lg-4 g-3">
+                @foreach ($galleryImages as $img)
+                    @php
+                        $fileName = $img->getFilename();
+                        $title = 'Photo ' . ($loop->iteration);
+                        $src = asset('photos/' . $fileName);
+                        $modalId = 'galleryModal' . $loop->index;
+                    @endphp
+                    <div class="col text-center">
+    <a href="#" data-bs-toggle="modal" data-bs-target="#{{ $modalId }}">
+        <img src="{{ $src }}" class="img-fluid rounded shadow-sm" alt="{{ $title }}" style="max-height: 180px; object-fit: cover; width: 100%;" loading="lazy">
+    </a>
+
+    <!-- Modal -->
+    <div class="modal fade" id="{{ $modalId }}" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ $title }}</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <img src="{{ $src }}" class="img-fluid w-100" alt="{{ $title }}">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                @endforeach
+            </div>
+        </div>
+    @else
+        <p>No images found.</p>
+    @endif
     @auth
         @if(!$property->closed && $property->end_at->isFuture())
         <form action="{{ route('bid.store') }}" method="POST" class="mb-4">
@@ -47,5 +91,17 @@ setInterval(() => {
             });
         });
 }, 5000);
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('[data-bs-toggle="modal"]').forEach(trigger => {
+        trigger.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('data-bs-target'));
+            const modal = new bootstrap.Modal(target);
+            modal.show();
+        });
+    });
+});
+
 </script>
 @endpush

@@ -119,51 +119,7 @@
                         </li>
                     </ul>
 
-                    @php
-                        use Illuminate\Support\Facades\File;
-                        $galleryImages = File::exists(resource_path('img/photos'))
-                            ? collect(File::files(resource_path('img/photos')))
-                                ->filter(fn($f) => in_array(strtolower($f->getExtension()), ['jpg', 'jpeg', 'png']))
-                            : collect();
-                    @endphp
 
-                    @if ($galleryImages->isNotEmpty())
-                        <div class="container my-4">
-                            <div class="row row-cols-2 row-cols-lg-4 g-3">
-                                @foreach ($galleryImages as $img)
-                                    @php
-                                        $fileName = $img->getFilename();
-                                        $title = pathinfo($fileName, PATHINFO_FILENAME);
-                                        $src = Vite::asset('resources/img/photos/' . $fileName);
-                                    @endphp
-                                    <div class="col text-center">
-                                        <a href="#" data-bs-toggle="modal" data-bs-target="#galleryModal{{ $loop->index }}">
-                                            <img src="{{ $src }}" class="img-fluid rounded" alt="{{ $title }}">
-                                        </a>
-                                        <p class="small mt-1">{{ $title }}</p>
-                                    </div>
-
-                                    <div class="modal fade" id="galleryModal{{ $loop->index }}" tabindex="-1" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">{{ $title }}</h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body p-0">
-                                                    <img src="{{ $src }}" class="img-fluid w-100" alt="{{ $title }}">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    @else
-                        <p>No images found.</p>
-                    @endif
-
-                </div>
                 <div class="bg-[#fff2f2] dark:bg-[#1D0002] relative lg:-ml-px -mb-px lg:mb-0 rounded-t-lg lg:rounded-t-none lg:rounded-r-lg aspect-[335/376] lg:aspect-auto w-full lg:w-[438px] shrink-0 overflow-hidden">
                     {{-- Laravel Logo --}}
                     <svg class="w-full text-[#F53003] dark:text-[#F61500] transition-all translate-y-0 opacity-100 max-w-none duration-750 starting:opacity-0 starting:translate-y-6" viewBox="0 0 438 104" fill="none" xmlns="http://www.w3.org/2000/svg">
