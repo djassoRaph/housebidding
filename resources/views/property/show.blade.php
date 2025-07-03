@@ -23,30 +23,47 @@
                         $fileName = $img->getFilename();
                         $title = 'Photo ' . ($loop->iteration);
                         $src = asset('photos/' . $fileName);
-                        $modalId = 'galleryModal' . $loop->index;
                     @endphp
                     <div class="col text-center">
-    <a href="#" data-bs-toggle="modal" data-bs-target="#{{ $modalId }}">
-        <img src="{{ $src }}" class="img-fluid rounded shadow-sm" alt="{{ $title }}" style="max-height: 180px; object-fit: cover; width: 100%;" loading="lazy">
-    </a>
-
-    <!-- Modal -->
-    <div class="modal fade" id="{{ $modalId }}" tabindex="-1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">{{ $title }}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
-                </div>
-                <div class="modal-body p-0">
-                    <img src="{{ $src }}" class="img-fluid w-100" alt="{{ $title }}">
-                </div>
+                        <a href="#" data-bs-toggle="modal" data-bs-target="#galleryCarouselModal" data-bs-slide-to="{{ $loop->index }}">
+                            <img src="{{ $src }}" class="img-fluid rounded shadow-sm" alt="{{ $title }}" style="max-height: 180px; object-fit: cover; width: 100%;" loading="lazy">
+                        </a>
+                    </div>
+                @endforeach
             </div>
         </div>
-    </div>
-</div>
 
-                @endforeach
+        <!-- Single Carousel Modal -->
+        <div class="modal fade" id="galleryCarouselModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content bg-transparent border-0">
+                    <button type="button" class="btn-close position-absolute end-0 m-3" data-bs-dismiss="modal" aria-label="Fermer"></button>
+                    <div id="galleryCarousel" class="carousel slide" data-bs-touch="true">
+                        <div class="carousel-inner">
+                            @foreach ($galleryImages as $img)
+                                @php
+                                    $fileName = $img->getFilename();
+                                    $title = 'Photo ' . ($loop->iteration);
+                                    $src = asset('photos/' . $fileName);
+                                @endphp
+                                <div class="carousel-item @if($loop->first) active @endif">
+                                    <img src="{{ $src }}" class="d-block w-100" alt="{{ $title }}" loading="lazy">
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <h5>{{ $title }}</h5>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Précédent</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Suivant</span>
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     @else
@@ -93,13 +110,17 @@ setInterval(() => {
 }, 5000);
 
 document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('[data-bs-toggle="modal"]').forEach(trigger => {
-        trigger.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('data-bs-target'));
-            const modal = new bootstrap.Modal(target);
-            modal.show();
-        });
+    const carouselElement = document.getElementById('galleryCarousel');
+    if (!carouselElement) return;
+
+    const carousel = new bootstrap.Carousel(carouselElement);
+    const modalElement = document.getElementById('galleryCarouselModal');
+
+    modalElement.addEventListener('show.bs.modal', function (event) {
+        const trigger = event.relatedTarget;
+        if (trigger && trigger.dataset.bsSlideTo) {
+            carousel.to(parseInt(trigger.dataset.bsSlideTo));
+        }
     });
 });
 
