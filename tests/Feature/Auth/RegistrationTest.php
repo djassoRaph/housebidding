@@ -3,6 +3,7 @@
 namespace Tests\Feature\Auth;
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\UploadedFile;
 use Tests\TestCase;
 
 class RegistrationTest extends TestCase
@@ -21,11 +22,13 @@ class RegistrationTest extends TestCase
         $response = $this->post('/register', [
             'name' => 'Test User',
             'email' => 'test@example.com',
+            'phone_number' => '0123456789',
+            'proof' => UploadedFile::fake()->create('proof.pdf', 10, 'application/pdf'),
             'password' => 'password',
             'password_confirmation' => 'password',
         ]);
 
         $this->assertAuthenticated();
-        $response->assertRedirect(route('dashboard', absolute: false));
+        $response->assertRedirect('/');
     }
 }
