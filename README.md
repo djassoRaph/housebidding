@@ -1,6 +1,6 @@
 # Housebidding
 
-Projet Laravel 11 minimaliste de vente aux enchères d'une maison.
+Projet Laravel 11 minimaliste de vente d'une maison.
 
 ## Installation
 

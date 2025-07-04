@@ -11,7 +11,7 @@
         @endforeach
     </ul>
 
-    <h2 class="text-xl font-bold mt-4">Enchères</h2>
+    <h2 class="text-xl font-bold mt-4">Offres</h2>
     <ul class="list-disc pl-5">
         @foreach($bids as $bid)
             <li>{{ $bid->user->name }} - {{ number_format($bid->amount,0,',',' ') }} € - {{ $bid->created_at->format('d/m/Y H:i') }}</li>

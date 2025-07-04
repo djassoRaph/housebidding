@@ -1,7 +1,7 @@
 <x-mail::message>
-# Nouvelle enchère confirmée
+# Nouvelle offre confirmée
 
-Vous avez placé une enchère de **{{ number_format($bid->amount, 0, ',', ' ') }} €** le {{ $bid->created_at->format('d/m/Y H:i') }}.
+Vous avez placé une offre de **{{ number_format($bid->amount, 0, ',', ' ') }} €** le {{ $bid->created_at->format('d/m/Y H:i') }}.
 
 Merci de votre participation.
 

@@ -23,7 +23,7 @@ class BidPlaced extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Nouvelle enchère',
+            subject: 'Nouvelle offre',
         );
     }
 

@@ -29,10 +29,11 @@
     <p>Ce site respecte les obligations liées au Règlement Général sur la Protection des Données (RGPD).</p>
 
     <ul class="list-disc pl-6 mb-4">
-        <li>Les données collectées (nom, email, justificatif de solvabilité) servent uniquement à la gestion des enchères.</li>
+        <li>Les données collectées (nom, email, téléphone, justificatif de solvabilité) servent uniquement à la gestion des offres.</li>
         <li>Elles ne sont ni revendues, ni transmises à des tiers non autorisés.</li>
-        <li>La durée de conservation est de 12 mois à partir de la clôture de l’enchère.</li>
+        <li>La durée de conservation est de 12 mois à partir de la clôture de offres.</li>
         <li>Vous pouvez à tout moment exercer vos droits d’accès, de modification ou de suppression de vos données en écrivant à : contact@raphaelreck.com</li>
+        <li>Y'a pas de cookies sur ce site ! Pas de publicité !</li>
     </ul>
 
     <p>Le traitement technique des données est assuré par Raphaël Reck, prestataire indépendant. contact@raphaelreck.com</p>

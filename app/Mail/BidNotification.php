@@ -23,7 +23,7 @@ class BidNotification extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Nouvelle enchère reçue',
+            subject: 'Nouvelle offre reçue',
         );
     }
 

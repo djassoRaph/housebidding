@@ -1,5 +1,5 @@
 <x-mail::message>
-# Nouvelle enchère reçue
+# Nouvelle offre reçue
 
 L'utilisateur {{ $bid->user->name }} a proposé **{{ number_format($bid->amount, 0, ',', ' ') }} €** le {{ $bid->created_at->format('d/m/Y H:i') }}.
 

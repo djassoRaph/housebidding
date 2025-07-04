@@ -5,8 +5,8 @@
     <h1 class="text-2xl font-bold mb-4">{{ $property->title }}</h1>
     <p class="mb-2">{{ $property->description }}</p>
     <p class="mb-2"><strong>Lieu :</strong> {{ $property->location }}</p>
-    <p class="mb-2"><strong>Fin des enchères :</strong> {{ $property->end_at->format('d/m/Y H:i') }}</p>
-    <p class="mb-4"><strong>Enchère actuelle :</strong> {{ $highestBid ? number_format($highestBid->amount,0,',',' ') . ' €' : 'Aucune' }}</p>
+    <p class="mb-2"><strong>Fin des offres :</strong> {{ $property->end_at->format('d/m/Y H:i') }}</p>
+    <p class="mb-4"><strong>Offre actuelle :</strong> {{ $highestBid ? number_format($highestBid->amount,0,',',' ') . ' €' : 'Aucune' }}</p>
 
     @php
         use Illuminate\Support\Facades\File;
@@ -39,7 +39,7 @@
         @if(!$property->closed && $property->end_at->isFuture())
         <form action="{{ route('bid.store') }}" method="POST" class="mb-4">
             @csrf
-            <label for="amount" class="block mb-2">Montant de l'enchère (min {{ number_format(($highestBid?->amount ?? $property->starting_price - $property->min_increment) + $property->min_increment,0,',',' ') }} €)</label>
+            <label for="amount" class="block mb-2">Montant de l'offre (min {{ number_format(($highestBid?->amount ?? $property->starting_price - $property->min_increment) + $property->min_increment,0,',',' ') }} €)</label>
             <input type="number" name="amount" id="amount" required class="border p-2" />
             <button type="submit" class="ml-2 px-4 py-2 bg-blue-500 text-white">Enchérir</button>
         </form>
@@ -47,10 +47,10 @@
             <p class="text-red-600 font-bold">La vente est terminée.</p>
         @endif
     @else
-        <p><a href="{{ route('login') }}" class="text-blue-500 underline">Connectez-vous</a> pour enchérir.</p>
+        <p><a href="{{ route('login') }}" class="text-blue-500 underline">Connectez-vous</a> pour faire une offre.</p>
     @endauth
 
-    <h2 class="text-xl font-bold mt-8 mb-2">Historique des enchères</h2>
+    <h2 class="text-xl font-bold mt-8 mb-2">Historique des offres</h2>
     <div id="bids">
         @foreach($property->bids()->with('user')->orderByDesc('created_at')->get() as $bid)
             <p>{{ $bid->user->name }} - {{ number_format($bid->amount,0,',',' ') }} € - {{ $bid->created_at->format('d/m/Y H:i') }}</p>
