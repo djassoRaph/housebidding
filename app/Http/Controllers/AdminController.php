@@ -33,7 +33,7 @@ class AdminController extends Controller
 
     private function authorizeAdmin(): void
     {
-        if (Auth::guest() || Auth::user()->email !== config('mail.admin_address')) {
+        if (Auth::guest() || !Auth::user()->is_admin) {
             abort(403);
         }
     }

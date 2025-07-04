@@ -17,8 +17,10 @@ Route::get('/dashboard', function () {
 })->middleware(['auth'])->name('dashboard');
 
 
-Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
-Route::post('/admin/close', [AdminController::class, 'close'])->name('admin.close');
+Route::middleware(['auth', 'isAdmin'])->group(function () {
+    Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::post('/admin/close', [AdminController::class, 'close'])->name('admin.close');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -35,8 +37,5 @@ Route::post('/register', [RegisteredUserController::class, 'store'])
 
 
 
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('/__backpanel_secret', [AdminController::class, 'index'])->name('admin.panel');
-});
 
 require __DIR__.'/auth.php';
