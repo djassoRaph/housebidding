@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
         @csrf
 
         <!-- Nom -->
@@ -14,6 +14,20 @@
             <x-input-label for="email" value="Email" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        </div>
+
+        <!-- Téléphone -->
+        <div class="mt-4">
+            <x-input-label for="phone_number" value="Téléphone" />
+            <x-text-input id="phone_number" class="block mt-1 w-full" type="text" name="phone_number" :value="old('phone_number')" required />
+            <x-input-error :messages="$errors->get('phone_number')" class="mt-2" />
+        </div>
+
+        <!-- Fichier justificatif -->
+        <div class="mt-4">
+            <x-input-label for="proof" value="Fichier justificatif" />
+            <input id="proof" type="file" name="proof" accept=".pdf,.jpg,.png" class="block mt-1 w-full" required />
+            <x-input-error :messages="$errors->get('proof')" class="mt-2" />
         </div>
 
         <!-- Mot de passe -->
