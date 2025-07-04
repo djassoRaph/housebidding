@@ -14,11 +14,15 @@ class DemoSeeder extends Seeder
      */
     public function run(): void
     {
-        $user = User::factory()->create([
-            'name' => 'Utilisateur Démo',
-            'email' => 'demo@example.com',
+       $user = User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'admin@example.com',
             'password' => bcrypt('password'),
+            'is_admin' => true,
+            'phone_number' => '0600000000', 
+            'proof_path'   => null,
         ]);
+
 
         Property::updateOrCreate(
             ['title' => 'Appartement de Julien GOETZ'], // Unique identifying field
@@ -30,13 +34,6 @@ class DemoSeeder extends Seeder
                 'end_at' => now()->addDays(7),
             ]
         );
-
-        User::create([
-            'name' => 'Admin',
-            'email' => 'admin@example.com',
-            'password' => bcrypt('supersecret'),
-            'is_admin' => true,
-        ]);
 
     }
 }
