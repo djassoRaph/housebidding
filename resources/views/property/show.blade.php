@@ -2,12 +2,29 @@
 
 @section('content')
 <div class="max-w-4xl mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">{{ $property->title }}</h1>
-    <p class="mb-2">{{ $property->description }}</p>
-    <p class="mb-2"><strong>Lieu :</strong> {{ $property->location }}</p>
-    <p class="mb-2"><strong>Fin des offres :</strong> {{ $property->end_at->format('d/m/Y H:i') }}</p>
-    <p class="mb-4"><strong>Offre actuelle :</strong> {{ $highestBid ? number_format($highestBid->amount,0,',',' ') . ' €' : 'Aucune' }}</p>
+    <div class="container my-4" style="all: unset; display: block;">
+        <div class="row align-items-start">
+            <!-- LEFT: Property Info -->
+            <div id="left" class="col-12 col-md-7 mb-4 mb-md-0">
+                <h1 class="text-2xl font-bold mb-4">{{ $property->title }}</h1>
+                <p class="mb-2">{{ $property->description }}</p>
+                <p class="mb-2"><strong>Lieu :</strong> {{ $property->location }}</p>
+                <p class="mb-2"><strong>Fin des offres :</strong> {{ $property->end_at->format('d/m/Y H:i') }}</p>
+                <p class="mb-4"><strong>Offre actuelle :</strong> {{ $highestBid ? number_format($highestBid->amount,0,',',' ') . ' €' : 'Aucune' }}</p>
+            </div>
 
+            <!-- RIGHT: Plan image or fallback -->
+            <div id="right" class="col-12 col-md-5 d-flex justify-content-center align-items-center">
+                <div id="plans" class="border p-2 text-center">
+                    @if(file_exists(public_path('photos/plan.jpg')))
+                        <img src="{{ asset('photos/plan.jpg') }}" alt="Plan de l'appartement" class="img-fluid rounded shadow-sm" style="max-width: 400px;">
+                    @else
+                        <p class="text-muted m-0">Plan non disponible.</p>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
     @php
         use Illuminate\Support\Facades\File;
         $galleryImages = File::exists(public_path('photos'))
