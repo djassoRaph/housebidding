@@ -30,13 +30,19 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'phone_number' => ['required', 'string', 'max:20'],
-            'proof' => ['required', 'file', 'max:5120', 'mimes:pdf,jpg,png'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+        $request->validate(
+            [
+                'name' => ['required', 'string', 'max:255'],
+                'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+                'phone_number' => ['required', 'regex:/^0[1-9][0-9]{8}$/'],
+                'proof' => ['required', 'file', 'max:5120', 'mimes:pdf,jpg,png'],
+                'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            ],
+            [
+                'email.email' => 'Veuillez saisir une adresse e-mail valide (ex: nom@domaine.com)',
+                'phone_number.regex' => 'Le numéro doit commencer par 0 et contenir exactement 10 chiffres. Exemple : 0612345678',
+            ]
+        );
 
         $path = $request->file('proof')->store('public/proofs');
 

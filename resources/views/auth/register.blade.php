@@ -12,14 +12,35 @@
         <!-- Adresse email -->
         <div class="mt-4">
             <x-input-label for="email" value="Email" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
+            <x-text-input
+                id="email"
+                class="block mt-1 w-full"
+                type="email"
+                name="email"
+                :value="old('email')"
+                required
+                autocomplete="username"
+                oninvalid="this.setCustomValidity('Veuillez saisir une adresse e-mail valide (ex: nom@domaine.com)')"
+                oninput="this.setCustomValidity('')"
+            />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
         <!-- Téléphone -->
         <div class="mt-4">
             <x-input-label for="phone_number" value="Téléphone" />
-            <x-text-input id="phone_number" class="block mt-1 w-full" type="text" name="phone_number" :value="old('phone_number')" required />
+            <x-text-input
+                id="phone_number"
+                class="block mt-1 w-full"
+                type="text"
+                name="phone_number"
+                :value="old('phone_number')"
+                required
+                pattern="^0[1-9][0-9]{8}$"
+                inputmode="tel"
+                oninvalid="this.setCustomValidity('Le numéro doit commencer par 0 et contenir exactement 10 chiffres. Exemple : 0612345678')"
+                oninput="this.setCustomValidity('')"
+            />
             <x-input-error :messages="$errors->get('phone_number')" class="mt-2" />
         </div>
 
